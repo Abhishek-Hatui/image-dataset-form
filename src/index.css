@@ -1,5 +1,24 @@
-body {
+*,
+*::after,
+*::before{
   margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+:root{
+  --wet-asphalt: #485e74;
+  --midnight-blue: #2c3e50;
+  --clouds: #ecf0f1;
+}
+
+html{
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: var(--clouds);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

@@ -1,0 +1,38 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.image-container {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  height: 85vh;
+  margin-bottom: 1rem;
+}
+
+.input-group {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.button{
+    padding: 1rem 2rem;
+}
+
+.nav-button{
+    padding: 1rem 2rem;
+    background-color: var(--midnight-blue);
+    color: var(--clouds);
+    font-size: 2rem;
+}
+
+.nav-button:hover,
+.nav-button:active{
+    padding: 1rem 2rem;
+    background-color: var(--wet-asphalt);
+    color: var(--clouds);
+    font-size: 2rem;
+}
