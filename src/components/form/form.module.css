@@ -36,3 +36,30 @@
     color: var(--clouds);
     font-size: 2rem;
 }
+
+@media screen and (max-width: 600px) {
+  .image{
+    width: 80vw;
+    height: auto;
+    object-fit: contain;
+  }
+  .image-container {
+
+    height: 45vh;
+  }
+
+  .input-group {
+  display: flex;
+  flex-direction: column;
+  }
+
+  .button{
+    margin: 5px;
+    margin-bottom: 20vh;
+  }
+
+  .input{
+    height: 30px;
+  }
+  
+}

@@ -12,6 +12,7 @@ const Form = () => {
     entropy: 0,
     localEntropy: 0,
     saturation: 0,
+    overall: 0,
   });
 
   useEffect(() => {
@@ -32,10 +33,16 @@ const Form = () => {
     };
     fetchImages();
   }, []);
+  let initialIndex = 0;
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(
-    Math.floor(Math.random() * images.length)
-  );
+  if (!images.length) {
+    initialIndex = Math.floor(Math.random() * 900);
+  } else {
+    initialIndex = Math.floor(Math.random() * images.length);
+  }
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(initialIndex);
+
   const handlePrevImage = () => {
     setCurrentImageIndex(
       prevImageIndex !== null ? prevImageIndex : currentImageIndex
@@ -74,6 +81,7 @@ const Form = () => {
                 entropy: ratings.entropy,
                 localEntropy: ratings.localEntropy,
                 saturation: ratings.saturation,
+                overall: ratings.overall,
               },
             ]
           : [
@@ -84,6 +92,7 @@ const Form = () => {
                 entropy: ratings.entropy,
                 localEntropy: ratings.localEntropy,
                 saturation: ratings.saturation,
+                overall: ratings.overall,
               },
             ],
     };
@@ -113,6 +122,7 @@ const Form = () => {
         entropy: 0,
         localEntropy: 0,
         saturation: 0,
+        overall: 0,
       });
 
       // Update the local images state with the new data
@@ -139,18 +149,18 @@ const Form = () => {
           method: 'DELETE',
         }
       );
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Error:', errorData);
         throw new Error('Could not delete image');
       }
-  
+
       // Remove the deleted image from the local state
       const updatedImages = [...images];
       updatedImages.splice(currentImageIndex, 1);
       setImages(updatedImages);
-  
+
       // Update the database with the modified images array
       try {
         const updateDatabaseResponse = await fetch(
@@ -163,17 +173,22 @@ const Form = () => {
             body: JSON.stringify(updatedImages),
           }
         );
-  
+
         if (!updateDatabaseResponse.ok) {
           const errorData = await updateDatabaseResponse.json();
           console.error('Error updating database:', errorData);
           throw new Error('Could not update database');
         }
       } catch (updateError) {
-        console.error('Caught an exception during database update:', updateError);
-        window.alert('An error occurred while updating the database. Please try again later.');
+        console.error(
+          'Caught an exception during database update:',
+          updateError
+        );
+        window.alert(
+          'An error occurred while updating the database. Please try again later.'
+        );
       }
-  
+
       // Move to the next image after deletion
       handleNextImage();
     } catch (error) {
@@ -181,7 +196,6 @@ const Form = () => {
       window.alert('An error occurred. Please try again later.');
     }
   };
-  
 
   return (
     <>
@@ -208,6 +222,7 @@ const Form = () => {
         <div className={classes['input-group']}>
           <label htmlFor="contrast">Contrast:</label>&nbsp;
           <input
+            className={classes.input}
             type="number"
             id="contrast"
             min="1"
@@ -221,6 +236,7 @@ const Form = () => {
           &nbsp;
           <label htmlFor="local-contrast">Local Contrast:</label>&nbsp;
           <input
+            className={classes.input}
             type="number"
             id="local-contrast"
             min="1"
@@ -250,6 +266,7 @@ const Form = () => {
           &nbsp;
           <label htmlFor="local-entropy">Local Entropy:</label>&nbsp;
           <input
+            className={classes.input}
             type="number"
             id="local-entropy"
             min="1"
@@ -266,6 +283,7 @@ const Form = () => {
           &nbsp;
           <label htmlFor="saturation">Saturation:</label>&nbsp;
           <input
+            className={classes.input}
             type="number"
             id="saturation"
             min="1"
@@ -275,6 +293,23 @@ const Form = () => {
               setRatings({
                 ...ratings,
                 saturation: parseInt(e.target.value, 10),
+              })
+            }
+            required
+          />
+          &nbsp;
+          <label htmlFor="overall">Overall:</label>&nbsp;
+          <input
+            className={classes.input}
+            type="number"
+            id="overall"
+            min="1"
+            max="5"
+            value={ratings.overall}
+            onChange={(e) =>
+              setRatings({
+                ...ratings,
+                overall: parseInt(e.target.value, 10),
               })
             }
             required
