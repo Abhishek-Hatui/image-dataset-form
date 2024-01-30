@@ -41,8 +41,9 @@ const Form = () => {
     initialIndex = Math.floor(Math.random() * images.length);
   }
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(initialIndex);
+  
 
+  const [currentImageIndex, setCurrentImageIndex] = useState(initialIndex);
   const handlePrevImage = () => {
     setCurrentImageIndex(
       prevImageIndex !== null ? prevImageIndex : currentImageIndex
@@ -223,7 +224,7 @@ const Form = () => {
           <label htmlFor="contrast">Contrast:</label>&nbsp;
           <input
             className={classes.input}
-            type="number"
+            type="range"
             id="contrast"
             min="1"
             max="5"
@@ -233,11 +234,12 @@ const Form = () => {
             }
             required
           />
+           <output className={classes.output}>{ratings.contrast}</output>
           &nbsp;
           <label htmlFor="local-contrast">Local Contrast:</label>&nbsp;
           <input
             className={classes.input}
-            type="number"
+            type="range"
             id="local-contrast"
             min="1"
             max="5"
@@ -250,10 +252,11 @@ const Form = () => {
             }
             required
           />
+          <output className={classes.output}>{ratings.localContrast}</output>
           &nbsp;
           <label htmlFor="entropy">Entropy:</label>&nbsp;
           <input
-            type="number"
+            type="range"
             id="entropy"
             min="1"
             max="5"
@@ -263,11 +266,12 @@ const Form = () => {
             }
             required
           />
+          <output className={classes.output}>{ratings.entropy}</output>
           &nbsp;
           <label htmlFor="local-entropy">Local Entropy:</label>&nbsp;
           <input
             className={classes.input}
-            type="number"
+            type="range"
             id="local-entropy"
             min="1"
             max="5"
@@ -280,11 +284,12 @@ const Form = () => {
             }
             required
           />
+          <output className={classes.output}>{ratings.localEntropy}</output>
           &nbsp;
           <label htmlFor="saturation">Saturation:</label>&nbsp;
           <input
             className={classes.input}
-            type="number"
+            type="range"
             id="saturation"
             min="1"
             max="5"
@@ -297,11 +302,12 @@ const Form = () => {
             }
             required
           />
+          <output className={classes.output}>{ratings.saturation}</output>
           &nbsp;
           <label htmlFor="overall">Overall:</label>&nbsp;
           <input
             className={classes.input}
-            type="number"
+            type="range"
             id="overall"
             min="1"
             max="5"
@@ -314,6 +320,7 @@ const Form = () => {
             }
             required
           />
+          <output className={classes.output}>{ratings.overall}</output>
         </div>
         <button onClick={handleRatingSubmit} className={classes.button}>
           {isSubmitting ? 'submitting..' : 'Submit Rating'}
