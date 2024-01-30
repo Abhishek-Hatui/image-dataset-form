@@ -40,10 +40,9 @@ const Form = () => {
   } else {
     initialIndex = Math.floor(Math.random() * images.length);
   }
-
-  
-
   const [currentImageIndex, setCurrentImageIndex] = useState(initialIndex);
+  console.log(currentImageIndex);
+
   const handlePrevImage = (event) => {
     event.preventDefault();
     setCurrentImageIndex(
