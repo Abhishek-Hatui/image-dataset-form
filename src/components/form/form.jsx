@@ -135,7 +135,7 @@ const Form = () => {
       };
       setImages(updatedImages);
 
-      handleNextImage();
+      setCurrentImageIndex(Math.floor(Math.random() * images.length));
     } catch (error) {
       console.error('Caught an exception:', error);
       window.alert('An error occurred. Please try again later.');
@@ -143,7 +143,8 @@ const Form = () => {
     setIsSubmitting(false);
   };
 
-  const handleDeleteImage = async () => {
+  const handleDeleteImage = async (event) => {
+    event.preventDefault();
     try {
       const response = await fetch(
         `https://dataset-207b9-default-rtdb.asia-southeast1.firebasedatabase.app/images/${currentImageIndex}.json`,
@@ -192,7 +193,7 @@ const Form = () => {
       }
 
       // Move to the next image after deletion
-      handleNextImage();
+      setCurrentImageIndex(Math.floor(Math.random() * images.length));
     } catch (error) {
       console.error('Caught an exception:', error);
       window.alert('An error occurred. Please try again later.');
