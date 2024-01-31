@@ -14,10 +14,10 @@
 }
 
 .next-btn{
-    width: 55px;
-    height: 30px;
-    margin: 20px;
-    margin-left: 40vw;
+    padding: 1rem 2rem;
+    margin: 2rem auto;
+    display: block;
+    text-transform: uppercase;
 }
 
 .home-lci, .home-lei{
@@ -26,6 +26,12 @@
 
 h2{
     font-size: 2rem;
+}
+
+.home-img{
+    display: inline-block;
+    padding: 1rem;
+    margin: 1rem;
 }
 
 @media screen and (max-width: 600px) {
@@ -43,7 +49,8 @@ h2{
 h2{
     font-size: 1.5rem;
 }
-.next-btn{
-    margin-left: 32vw;
+
+.home-img{
+    width: 40vw;
 }
 }

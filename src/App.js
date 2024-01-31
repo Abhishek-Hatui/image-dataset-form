@@ -1,23 +1,20 @@
 import React from "react";
-import Root from "./components/root/root.js";
 import Form from "./components/form/form";
-import Home from "./components/Home/Home.jsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-    children: [
-      {index: true, element: <Home />},
-      {path: 'form', element: <Form/>}
-    ]
-}
-])
+import Home from "./components/Home/Home";
+import { useState } from "react";
 
 function App() {
+  const [show,setShow] =useState(true);
+
+  const clickHandler = (event) => {
+    event.preventDefault();
+
+    setShow(false);
+  }
+
   return (
-    <RouterProvider router={router} />
+      show ? <Home click = {clickHandler}/> : <Form />
+    
   );
 }
 
