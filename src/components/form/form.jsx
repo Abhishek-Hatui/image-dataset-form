@@ -192,7 +192,7 @@ const Form = () => {
       }
 
       // Move to the next image after deletion
-      setCurrentImageIndex(Math.floor(Math.random() * images.length));
+      handlePrevImage();
     } catch (error) {
       console.error('Caught an exception:', error);
       window.alert('An error occurred. Please try again later.');
