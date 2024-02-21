@@ -191,13 +191,22 @@ const Form = () => {
         );
       }
 
-      // Move to the next image after deletion
-      handlePrevImage();
+      // Move to the prev image after deletion
+      setCurrentImageIndex(
+        prevImageIndex !== null ? prevImageIndex : currentImageIndex
+      );
     } catch (error) {
       console.error('Caught an exception:', error);
       window.alert('An error occurred. Please try again later.');
     }
   };
+  const imgWithRatings = [];
+
+  images.forEach((img) => {
+    if (img.numberOfRatings > 0) {
+      imgWithRatings.push(img);
+    }
+  });
 
   return (
     <>
@@ -235,7 +244,7 @@ const Form = () => {
             }
             required
           />
-           <output className={classes.output}>{ratings.contrast}</output>
+          <output className={classes.output}>{ratings.contrast}</output>
           &nbsp;
           <label htmlFor="local-contrast">Local Contrast:</label>&nbsp;
           <input
@@ -327,6 +336,8 @@ const Form = () => {
           {isSubmitting ? 'submitting..' : 'Submit Rating'}
         </button>
       </form>
+
+      <p>{imgWithRatings.length} responses</p>
 
       <input
         type="text"
