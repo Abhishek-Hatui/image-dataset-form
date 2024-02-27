@@ -33,15 +33,20 @@ const Form = () => {
     };
     fetchImages();
   }, []);
-  let initialIndex = 0;
 
+
+  const isRatingZero = el => el.numberOfRatings === 0;
+
+  let initialIndex = 0;
   if (!images.length) {
     initialIndex = Math.floor(Math.random() * 900);
   } else {
-    initialIndex = Math.floor(Math.random() * images.length);
+    // initialIndex = Math.floor(Math.random() * images.length);
+    initialIndex = images.findIndex(isRatingZero);
   }
-  const [currentImageIndex, setCurrentImageIndex] = useState(initialIndex);
 
+  const [currentImageIndex, setCurrentImageIndex] = useState(initialIndex);
+  
   const handlePrevImage = (event) => {
     event.preventDefault();
     setCurrentImageIndex(
@@ -51,9 +56,15 @@ const Form = () => {
 
   const handleNextImage = (event) => {
     event.preventDefault();
+    if(currentImageIndex === images.length-1){
+      window.alert('last image reached');
+      return;
+    }
     setPrevImageIndex(currentImageIndex);
 
-    setCurrentImageIndex(Math.floor(Math.random() * images.length));
+    // setCurrentImageIndex(Math.floor(Math.random() * images.length));
+    
+    setCurrentImageIndex(images.findIndex(isRatingZero));
   };
 
   const handleRatingSubmit = async (event) => {
@@ -134,7 +145,10 @@ const Form = () => {
       };
       setImages(updatedImages);
 
-      setCurrentImageIndex(Math.floor(Math.random() * images.length));
+      // setCurrentImageIndex(Math.floor(Math.random() * images.length));
+      setCurrentImageIndex(updatedImages.findIndex(isRatingZero));
+
+      setCount(prevState => prevState+1);
     } catch (error) {
       console.error('Caught an exception:', error);
       window.alert('An error occurred. Please try again later.');
@@ -192,14 +206,17 @@ const Form = () => {
       }
 
       // Move to the prev image after deletion
-      setCurrentImageIndex(
-        prevImageIndex !== null ? prevImageIndex : currentImageIndex
-      );
+      // setCurrentImageIndex(
+      //   prevImageIndex !== null ? prevImageIndex : currentImageIndex
+      // );
+      setCurrentImageIndex(images.findIndex(isRatingZero));
     } catch (error) {
       console.error('Caught an exception:', error);
       window.alert('An error occurred. Please try again later.');
     }
   };
+
+  //get the numer of responses
   const imgWithRatings = [];
 
   images.forEach((img) => {
@@ -207,6 +224,9 @@ const Form = () => {
       imgWithRatings.push(img);
     }
   });
+
+  //response counter
+  const [count,setCount] = useState(0);
 
   return (
     <>
@@ -337,7 +357,7 @@ const Form = () => {
         </button>
       </form>
 
-      <p>{imgWithRatings.length} responses</p>
+      <p style={{textAlign: 'center', marginTop: '2px'}}>you've rated {count} images</p>
 
       <input
         type="text"
@@ -347,9 +367,12 @@ const Form = () => {
       />
 
       {td && (
+        <>
         <button onClick={handleDeleteImage} className={classes.button}>
           Ignore this button
         </button>
+        <p>{imgWithRatings.length} responses</p>
+        </>
       )}
     </>
   );
