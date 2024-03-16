@@ -12,7 +12,6 @@ const Form = () => {
     entropy: 0,
     localEntropy: 0,
     saturation: 0,
-    overall: 0,
   });
 
   useEffect(() => {
@@ -35,17 +34,17 @@ const Form = () => {
   }, []);
 
 
-  const isRatingZero = el => el.numberOfRatings === 0;
+  // const isRatingZero = el => el.numberOfRatings === 0;
 
-  let initialIndex = 0;
-  if (!images.length) {
-    initialIndex = Math.floor(Math.random() * 900);
-  } else {
-    // initialIndex = Math.floor(Math.random() * images.length);
-    initialIndex = images.findIndex(isRatingZero);
-  }
+  // let initialIndex = 0;
+  // if (!images.length) {
+  //   initialIndex = Math.floor(Math.random() * 900);
+  // } else {
+  //   // initialIndex = Math.floor(Math.random() * images.length);
+  //   initialIndex = images.findIndex(isRatingZero);
+  // }
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(initialIndex);
+  const [currentImageIndex, setCurrentImageIndex] = useState(837);
   
   const handlePrevImage = (event) => {
     event.preventDefault();
@@ -62,9 +61,9 @@ const Form = () => {
     }
     setPrevImageIndex(currentImageIndex);
 
-    // setCurrentImageIndex(Math.floor(Math.random() * images.length));
+    setCurrentImageIndex(Math.floor(Math.random() * images.length));
     
-    setCurrentImageIndex(images.findIndex(isRatingZero));
+    // setCurrentImageIndex(images.findIndex(isRatingZero));
   };
 
   const handleRatingSubmit = async (event) => {
@@ -93,7 +92,7 @@ const Form = () => {
                 entropy: ratings.entropy,
                 localEntropy: ratings.localEntropy,
                 saturation: ratings.saturation,
-                overall: ratings.overall,
+                // overall: ratings.overall,
               },
             ]
           : [
@@ -104,7 +103,7 @@ const Form = () => {
                 entropy: ratings.entropy,
                 localEntropy: ratings.localEntropy,
                 saturation: ratings.saturation,
-                overall: ratings.overall,
+                // overall: ratings.overall,
               },
             ],
     };
@@ -134,7 +133,6 @@ const Form = () => {
         entropy: 0,
         localEntropy: 0,
         saturation: 0,
-        overall: 0,
       });
 
       // Update the local images state with the new data
@@ -146,7 +144,8 @@ const Form = () => {
       setImages(updatedImages);
 
       // setCurrentImageIndex(Math.floor(Math.random() * images.length));
-      setCurrentImageIndex(updatedImages.findIndex(isRatingZero));
+      // setCurrentImageIndex(updatedImages.findIndex(isRatingZero));
+      setCurrentImageIndex(prevState => prevState + 1);
 
       setCount(prevState => prevState+1);
     } catch (error) {
@@ -209,7 +208,8 @@ const Form = () => {
       // setCurrentImageIndex(
       //   prevImageIndex !== null ? prevImageIndex : currentImageIndex
       // );
-      setCurrentImageIndex(images.findIndex(isRatingZero));
+      // setCurrentImageIndex(images.findIndex(isRatingZero));
+      setCurrentImageIndex(prevState => prevState + 1);
     } catch (error) {
       console.error('Caught an exception:', error);
       window.alert('An error occurred. Please try again later.');
@@ -217,13 +217,13 @@ const Form = () => {
   };
 
   //get the numer of responses
-  const imgWithRatings = [];
+  // const imgWithRatings = [];
 
-  images.forEach((img) => {
-    if (img.numberOfRatings > 0) {
-      imgWithRatings.push(img);
-    }
-  });
+  // images.forEach((img) => {
+  //   if (img.numberOfRatings > 0) {
+  //     imgWithRatings.push(img);
+  //   }
+  // });
 
   //response counter
   const [count,setCount] = useState(0);
@@ -240,7 +240,7 @@ const Form = () => {
               <img
                 className={classes.image}
                 src={images[currentImageIndex].Image_URL}
-                alt={`current phot0 ${currentImageIndex + 1}`}
+                alt={`img load error`}
               />
             </>
           ) : (
@@ -334,23 +334,6 @@ const Form = () => {
           />
           <output className={classes.output}>{ratings.saturation}</output>
           &nbsp;
-          <label htmlFor="overall">Overall:</label>&nbsp;
-          <input
-            className={classes.input}
-            type="range"
-            id="overall"
-            min="1"
-            max="5"
-            value={ratings.overall}
-            onChange={(e) =>
-              setRatings({
-                ...ratings,
-                overall: parseInt(e.target.value, 10),
-              })
-            }
-            required
-          />
-          <output className={classes.output}>{ratings.overall}</output>
         </div>
         <button onClick={handleRatingSubmit} className={classes.button}>
           {isSubmitting ? 'submitting..' : 'Submit Rating'}
@@ -371,7 +354,7 @@ const Form = () => {
         <button onClick={handleDeleteImage} className={classes.button}>
           Ignore this button
         </button>
-        <p>{imgWithRatings.length} responses</p>
+
         </>
       )}
     </>
