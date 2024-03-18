@@ -44,7 +44,7 @@ const Form = () => {
   //   initialIndex = images.findIndex(isRatingZero);
   // }
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(837);
+  const [currentImageIndex, setCurrentImageIndex] = useState(888);
   
   const handlePrevImage = (event) => {
     event.preventDefault();
